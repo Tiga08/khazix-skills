@@ -31,7 +31,7 @@ Each one was running in my own projects long enough to prove it actually saves t
 
 | Name | One-liner | Article |
 |---|---|---|
-| 🧹 [**neat-freak**](#-neat-freak) | After a session, run `/neat` to reconcile your project docs, CLAUDE.md, and agent memory with the code | *Coming soon* |
+| 🧹 [**neat-freak**](#-neat-freak) | After a session, run `/neat` to reconcile your project docs, CLAUDE.md, and agent memory with the code | [Article (Chinese)](https://mp.weixin.qq.com/s/tg1wd-iN2gWHWhXdY0faeg) |
 | 🔭 [**hv-analysis**](#-hv-analysis) | Drop a product/company/concept into it and get a 10k–30k word PDF research report | [Article (Chinese)](https://mp.weixin.qq.com/s/Y_uRMYBmdLWUPnz_ac7jWA) |
 | ✍️ [**khazix-writer**](#-khazix-writer) | Makes the agent write long-form Chinese articles in my personal voice | [Article (Chinese)](https://mp.weixin.qq.com/s/AtxGrii_K-nzkwUM9SNhEg) |
 
@@ -45,57 +45,13 @@ Each one was running in my own projects long enough to prove it actually saves t
 
 ## 📦 Install
 
-<details>
-<summary><b>Option 1 · Let the agent install it</b> (recommended)</summary>
-
 In any agent that supports Skills (Claude Code, Codex, OpenClaw…), just say:
 
 ```
 Install this skill: https://github.com/KKKKhazix/khazix-skills/tree/main/<skill-name>
 ```
 
-Replace `<skill-name>` with the one you want — e.g. `neat-freak`, `hv-analysis`, `khazix-writer`.
-
-</details>
-
-<details>
-<summary><b>Option 2 · git clone + copy</b></summary>
-
-```bash
-git clone https://github.com/KKKKhazix/khazix-skills.git
-cp -r khazix-skills/<skill-name> <your-skills-dir>/
-```
-
-Skills directory by tool:
-
-| Tool | Path |
-|---|---|
-| Claude Code | `~/.claude/skills/` |
-| Codex | `~/.codex/skills/` |
-| OpenClaw | `~/.openclaw/skills/` |
-| OpenCode | `.opencode/skills/` (project) / `~/.config/opencode/skills/` (global) |
-
-Example — install neat-freak into Claude Code:
-
-```bash
-git clone https://github.com/KKKKhazix/khazix-skills.git
-cp -r khazix-skills/neat-freak ~/.claude/skills/
-```
-
-</details>
-
-<details>
-<summary><b>Option 3 · Package managers</b></summary>
-
-```bash
-# ClawHub
-clawhub install <skill-name>
-
-# Tessl
-tessl install khazix-skills/<skill-name>
-```
-
-</details>
+Replace `<skill-name>` with the one you want — e.g. `neat-freak`, `hv-analysis`, `khazix-writer`. The agent will clone it into the right directory for you.
 
 ---
 
@@ -140,7 +96,7 @@ tidy up docs     # natural language
 [![ClawHub](https://img.shields.io/badge/ClawHub-v1.0.1-EC4899?style=flat-square)](https://clawhub.ai)
 [![Tessl](https://img.shields.io/badge/Tessl-0.1.1-3B82F6?style=flat-square)](https://tessl.io/registry/khazix-skills/neat-freak)
 
-→ [SKILL.md](./neat-freak/SKILL.md) · Article: *coming soon*
+→ [SKILL.md](./neat-freak/SKILL.md) · [Article (Chinese)](https://mp.weixin.qq.com/s/tg1wd-iN2gWHWhXdY0faeg)
 
 </td></tr>
 </table>

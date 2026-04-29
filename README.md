@@ -31,7 +31,7 @@
 
 | 名字 | 一句话 | 讲解 |
 |---|---|---|
-| 🧹 [**neat-freak（洁癖）**](#-neat-freak洁癖) | 干完活跑一下 `/neat`，自动把你这次改的东西跟项目文档、CLAUDE.md、Agent 记忆全部对齐 | *待发布* |
+| 🧹 [**neat-freak（洁癖）**](#-neat-freak洁癖) | 干完活跑一下 `/neat`，自动把你这次改的东西跟项目文档、CLAUDE.md、Agent 记忆全部对齐 | [公众号文章](https://mp.weixin.qq.com/s/tg1wd-iN2gWHWhXdY0faeg) |
 | 🔭 [**hv-analysis（横纵分析法）**](#-hv-analysis横纵分析法) | 想搞懂一个产品/公司/概念是怎么回事，丢给它，给你一份万字 PDF 研究报告 | [公众号文章](https://mp.weixin.qq.com/s/Y_uRMYBmdLWUPnz_ac7jWA) |
 | ✍️ [**khazix-writer（卡兹克写作）**](#-khazix-writer卡兹克写作) | 装上之后，Agent 用我的口吻和节奏写公众号长文 | [公众号文章](https://mp.weixin.qq.com/s/AtxGrii_K-nzkwUM9SNhEg) |
 
@@ -45,57 +45,13 @@
 
 ## 📦 安装方式
 
-<details>
-<summary><b>方式 1 · 让 Agent 自己装</b>（推荐）</summary>
-
 在 Claude Code、Codex、OpenClaw 等支持 Skill 的 Agent 里，直接说：
 
 ```
 帮我安装这个 skill：https://github.com/KKKKhazix/khazix-skills/tree/main/<skill-name>
 ```
 
-把 `<skill-name>` 换成你想装的那个，比如 `neat-freak`、`hv-analysis`、`khazix-writer`。
-
-</details>
-
-<details>
-<summary><b>方式 2 · git clone 手动复制</b></summary>
-
-```bash
-git clone https://github.com/KKKKhazix/khazix-skills.git
-cp -r khazix-skills/<skill-name> <你的 skills 目录>/
-```
-
-各工具的 skills 目录：
-
-| 工具 | 路径 |
-|---|---|
-| Claude Code | `~/.claude/skills/` |
-| Codex | `~/.codex/skills/` |
-| OpenClaw | `~/.openclaw/skills/` |
-| OpenCode | `.opencode/skills/`（项目级）/ `~/.config/opencode/skills/`（全局） |
-
-例如装 neat-freak 到 Claude Code：
-
-```bash
-git clone https://github.com/KKKKhazix/khazix-skills.git
-cp -r khazix-skills/neat-freak ~/.claude/skills/
-```
-
-</details>
-
-<details>
-<summary><b>方式 3 · 通过包管理器</b></summary>
-
-```bash
-# ClawHub
-clawhub install <skill-name>
-
-# Tessl
-tessl install khazix-skills/<skill-name>
-```
-
-</details>
+把 `<skill-name>` 换成你想装的那个，比如 `neat-freak`、`hv-analysis`、`khazix-writer`。Agent 会自己 clone 到对应目录，不用你操心路径。
 
 ---
 
@@ -140,7 +96,7 @@ sync up          # English
 [![ClawHub](https://img.shields.io/badge/ClawHub-v1.0.1-EC4899?style=flat-square)](https://clawhub.ai)
 [![Tessl](https://img.shields.io/badge/Tessl-0.1.1-3B82F6?style=flat-square)](https://tessl.io/registry/khazix-skills/neat-freak)
 
-→ [SKILL.md](./neat-freak/SKILL.md) · 公众号讲解：*待发布*
+→ [SKILL.md](./neat-freak/SKILL.md) · [公众号讲解](https://mp.weixin.qq.com/s/tg1wd-iN2gWHWhXdY0faeg)
 
 </td></tr>
 </table>
