@@ -9,18 +9,20 @@ description: AI HOT (aihot.virxact.com) 中文 AI 资讯查询 Skill。当用户
 
 线上：https://aihot.virxact.com（公开匿名可访，无需 token）
 
-## 先决条件：必须带 User-Agent
+## 先决条件：必须带 User-Agent（仅 API 端点）
 
-公开 API 走 nginx UA 黑名单挡商业爬虫，默认 `curl/X.Y` UA 会被 403 Forbidden。**所有 curl 调用都必须带浏览器 UA**：
+`/api/public/*` 走 nginx UA 黑名单挡商业爬虫，默认 `curl/X.Y` UA 会被 403 Forbidden。**调 API 时所有 curl 都必须带浏览器 UA**：
 
 ```bash
 UA="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
 
-# 之后所有 curl 都加 -H "User-Agent: $UA"，例如：
+# 之后所有调 API 的 curl 都加 -H "User-Agent: $UA"，例如：
 curl -sH "User-Agent: $UA" "https://aihot.virxact.com/api/public/daily"
 ```
 
 后面"工作流"章节的 curl 例子为了简洁默认你已经设了 `$UA`——实际调用必须加 `-H "User-Agent: $UA"`，**不要忘**。漏掉这一步会让你以为接口挂了，实际只是被 403 挡了。
+
+> **范围澄清**：这条 UA 要求**只针对 `/api/public/*` API 端点**。`/aihot-skill/{install.sh,SKILL.md,README.md}` 安装入口 nginx 上**特意豁免** UA 黑名单（设计前提就是给 `curl -fsSL ... | bash` 一行装用），用 default curl UA 直通 200。不要把"先决条件"误推广到所有 aihot.virxact.com 路径。
 
 ## 什么时候用
 
