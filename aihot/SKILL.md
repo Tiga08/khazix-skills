@@ -347,7 +347,7 @@ curl -sH "User-Agent: $UA" "https://aihot.virxact.com/api/public/items?mode=all&
 
 - 不要试图猜测 / 编造内容 — 永远以 API 返回为准
 - 不要把摘要（`summary`）当原文引用 — 摘要由 LLM 生成，引用需要回 `url` / `sourceUrl` 核对
-- 不要做高频轮询 — 日报每天 08:00 才更新一次，items 端点 60s 服务端缓存，用户问相同问题时不需要重新调 API
+- 不要做高频轮询 — 日报每天 08:00 才更新一次，items 端点 5 分钟服务端缓存，用户问相同问题时不需要重新调 API
 - 不要并发猛拉翻页 — 串行 + 自然间隔
 - 不要尝试解析 / 递增 cursor — 它是不透明 base64url
 - 不要用 keyword search（API 不支持），公司维度查询走"拉一批 + 客户端过滤"
