@@ -1,323 +1,326 @@
 ---
 name: hv-analysis
 description: |
-  横纵分析法（Horizontal-Vertical Analysis）深度研究Skill。由数字生命卡兹克提出，融合了索绪尔的历时-共时分析、社会科学的纵向-横截面研究设计、商学院案例研究法与竞争战略分析的核心思想。
-  当用户想要系统性研究一个产品、公司、概念、技术或人物时使用。核心是双轴分析：纵轴追踪从诞生到当下的完整生命历程（以叙事故事呈现），横轴在当下时间截面上与竞品/同类进行系统性横向对比，最后交叉两条轴产出独到洞察。最终产出一份排版精美的PDF研究报告。
-  触发词包括但不限于：横纵分析、研究一下、帮我分析、深度研究、做个研究、调研一下、竞品分析、帮我看看这个东西怎么样、这个产品/公司/概念是怎么回事、帮我摸清楚、帮我搞懂、帮我做个deep research。
-  即使用户只是说"帮我了解一下XX"或"XX是什么来头"，只要上下文暗示需要系统性的深度研究（而非简单的概念解释），都应该触发。也适用于用户丢来一个产品名、公司名、技术名词说"帮我研究一下这个"的场景。
-  不要用于简单的名词解释（用户只是问"XX是什么"）、不要用于公众号写作（那个用khazix-writer）、不要用于纯标题摘要生成（用wechat-title）。
+  Horizontal-Vertical Analysis — a deep research skill created by digital life Khazix. Combines Saussure's diachronic-synchronic analysis, longitudinal-cross-sectional research design from social science, business school case study methods, and competitive strategy analysis.
+  Use when a user wants to systematically research a product, company, concept, technology, or person. The core is dual-axis analysis: the vertical axis traces the full lifecycle from origin to present (told as narrative), the horizontal axis runs a systematic comparison with competitors/peers on the current time-slice, and the cross-axis intersection produces unique insights. The final deliverable is a beautifully typeset PDF research report.
+  Chinese triggers: 横纵分析、研究一下、帮我分析、深度研究、做个研究、调研一下、竞品分析、帮我看看这个东西怎么样、这个产品/公司/概念是怎么回事、帮我摸清楚、帮我搞懂、帮我做个deep research。
+  Also triggers on phrases like "help me understand X" or "what's the story behind X" when the context implies systematic deep research rather than a simple definition. Suitable when a user drops a product name, company name, or technical term and says "research this for me."
+  Do NOT use for simple definitions ("what is X?"), WeChat article writing (use khazix-writer), or title/summary generation (use wechat-title).
 ---
 
-# 横纵分析法深度研究
+# Horizontal-Vertical Deep Research
 
-> **方法论溯源**
-> 横纵分析法由数字生命卡兹克（Khazix）提出，融合了语言学中的历时-共时分析（Saussure）、社会科学中的纵向-横截面研究设计、商学院案例研究法、以及竞争战略分析的核心思想，形成了一套适用于产品/公司/概念/人物的通用研究框架。核心原则不变：纵向追时间深度，横向追同期广度，最终交汇出判断。
+> **Methodology Origins**
+> Horizontal-Vertical Analysis was developed by digital life Khazix, synthesizing diachronic-synchronic analysis from linguistics (Saussure), longitudinal-cross-sectional research design from social science, business school case study methodology, and the core ideas of competitive strategy analysis into a general-purpose research framework for products, companies, concepts, and people. The core principle never changes: the vertical axis pursues temporal depth, the horizontal axis pursues contemporary breadth, and the intersection yields judgment.
 
-你正在执行一次横纵分析法深度研究。最终产出一份**排版精美的PDF研究报告**。
+You are conducting a Horizontal-Vertical deep research session. The final deliverable is a **beautifully typeset PDF research report**.
 
-## 前置准备
+## Prerequisites
 
-### 环境准备
+### Environment Setup
 
-1. **确认PDF转换脚本可用**：本Skill自带 `scripts/md_to_pdf.py`（基于WeasyPrint），用于将最终Markdown报告转为排版精美的PDF。确保依赖已安装：`pip install weasyprint markdown --break-system-packages`。
-2. **写作风格**：本Skill已内置完整的写作风格指南（见下文"写作风格"部分），无需额外加载其他skill。
+1. **Confirm the PDF conversion script is available**: This skill ships with `scripts/md_to_pdf.py` (WeasyPrint-based), which converts the final Markdown report into a well-typeset PDF. Make sure dependencies are installed: `pip install weasyprint markdown --break-system-packages`.
+2. **Writing style**: This skill has a complete writing style guide built in (see "Writing Style" below) — no need to load other skills.
 
-### 明确研究对象
+### Define the Research Subject
 
-拿到用户输入后，确认以下信息。如果用户已经给得足够明确（比如"帮我用横纵分析法研究Hermes Agent"），不需要追问，直接开始：
+After receiving the user's input, confirm the following. If the user has been sufficiently specific (e.g. "do an HV analysis of Hermes Agent"), skip the questions and start immediately:
 
-1. **研究对象**：具体的产品名/公司名/概念名/人名
-2. **类型**：产品、公司、概念、人物、还是其他？
-3. **研究动机**（可选）：为什么要研究它？最近发生了什么？
-4. **特别关注点**（可选）：有没有特别想深入的方向？
+1. **Research subject**: The specific product/company/concept/person name
+2. **Type**: Product, company, concept, person, or other?
+3. **Research motivation** (optional): Why research it? What happened recently?
+4. **Special focus** (optional): Any direction you want to go deeper on?
 
 ---
 
-## 第一步：联网信息收集
+## Step 1: Online Information Gathering
 
-这个方法论的质量完全取决于信息的丰富度和准确性。**必须联网搜索**，不能仅靠已有知识。研究报告的价值在于深度和完整度，所以信息收集阶段宁可多搜，不要因为信息不够导致后面的分析浮于表面。
+The quality of this methodology depends entirely on the richness and accuracy of the information. **You must search online** — do not rely solely on existing knowledge. The value of a research report lies in depth and completeness, so err on the side of over-searching rather than letting shallow information hollow out the analysis.
 
-### 并行搜索策略
+### Parallel Search Strategy
 
-使用子Agent并行搜索来提高效率。建议的分工：
+Use sub-agents to search in parallel for efficiency. Recommended division of labor:
 
-- **子Agent 1 — 纵向信息**：研究对象的起源、创始人背景、发展历程、关键事件、版本迭代、融资、战略转向、危机
-- **子Agent 2 — 横向信息**：竞品识别、各竞品的特点和用户口碑、行业对比评测、市场份额
-- **子Agent 3**（复杂对象才需要）：补充信息，如创始人深度背景、行业环境变化、用户社区讨论（GitHub issues、Reddit、Twitter/X、知乎等）
+- **Sub-Agent 1 — Vertical information**: Origin of the subject, founder background, development history, key events, version iterations, funding, strategic pivots, crises
+- **Sub-Agent 2 — Horizontal information**: Competitor identification, each competitor's features and user reputation, industry comparison reviews, market share
+- **Sub-Agent 3** (only for complex subjects): Supplementary information — founder deep background, industry environment changes, user community discussions (GitHub Issues, Reddit, Twitter/X, 知乎, etc.)
 
-**子Agent联网工具使用指南**（直接写入每个子Agent的prompt中）：
+**Sub-agent web tool usage guide** (include verbatim in each sub-agent's prompt):
 
-每个子Agent的prompt中必须包含以下联网指引：
+Each sub-agent prompt must contain the following web access instructions:
 
-> 你需要联网获取信息。使用以下工具：
-> - **WebSearch**：用于搜索发现信息来源，获取摘要和关键词结果
-> - **WebFetch**：当已知具体URL时，用于从页面定向提取内容
-> - 如果用户环境中安装了 web-access skill（检查路径 `/mnt/.claude/skills/web-access/SKILL.md` 是否存在），优先加载它并遵循其指引，它提供更强的浏览器CDP能力
-> - 搜索策略：先用WebSearch发现信息来源和线索，找到具体URL后用WebFetch深入提取
-> - 多次搜索、多个关键词组合，不要只搜一次就放弃
-> - 一手来源优于二手来源：官方博客 > 权威媒体原创报道 > 转载/聚合
-> - **学术类研究对象必查arxiv**：如果研究对象涉及学术概念、算法、AI模型、技术范式等，必须通过arxiv API获取相关论文。调用方式：`curl -s "https://export.arxiv.org/api/query?search_query=all:关键词1+AND+all:关键词2&max_results=10"`，或用WebFetch访问同一URL。返回XML格式，包含标题、作者、摘要、发布日期、PDF链接。可按需调整关键词组合和结果数量。找到关键论文后，用WebFetch读取论文页面（`https://arxiv.org/abs/论文ID`）获取更多细节。
+> You need to fetch information from the web. Use the following tools:
+> - **WebSearch**: For discovering information sources, getting summaries and keyword results
+> - **WebFetch**: When you know a specific URL, use it to extract content from the page
+> - If the user's environment has the web-access skill installed (check whether `/mnt/.claude/skills/web-access/SKILL.md` exists), load it first and follow its guidance — it provides stronger browser CDP capabilities
+> - Search strategy: Use WebSearch first to discover sources and leads, then WebFetch to extract details from specific URLs
+> - Search multiple times with multiple keyword combinations — don't give up after one search
+> - Primary sources beat secondary sources: official blog > authoritative original reporting > reposts/aggregators
+> - **Academic subjects must check arXiv**: If the subject involves academic concepts, algorithms, AI models, or technical paradigms, you must query arXiv for relevant papers. Call: `curl -s "https://export.arxiv.org/api/query?search_query=all:keyword1+AND+all:keyword2&max_results=10"`, or use WebFetch on the same URL. Returns XML with titles, authors, abstracts, publication dates, and PDF links. Adjust keyword combinations and result counts as needed. After finding key papers, use WebFetch on the paper page (`https://arxiv.org/abs/<paper-id>`) for more details.
 
-prompt要描述目标（"获取""调研""了解"），不要用暗示具体手段的动词（"搜索""爬取"），让子Agent自主判断最佳获取方式。
+Describe objectives in the prompt ("obtain," "investigate," "learn about"), not verbs that imply specific methods ("search," "crawl") — let the sub-agent decide the best approach.
 
-### 信息来源优先级
+### Information Source Priority
 
-一手来源优于二手来源，多个媒体引用同一个错误会造成循环印证假象：
+Primary sources beat secondary sources — multiple outlets citing the same error creates a circular-corroboration illusion:
 
-| 信息类型 | 一手来源 |
+| Information Type | Primary Sources |
 |---------|---------|
-| 产品更新/技术决策 | 官方博客、GitHub Release Notes、创始人推文 |
-| 融资/商业数据 | 公司官方公告、SEC/工商文件 |
-| 用户口碑 | GitHub Issues、Reddit讨论、Twitter/X、知乎帖子 |
-| 行业分析 | 权威媒体原创报道（非转载） |
-| 学术/技术原理 | arXiv论文（`export.arxiv.org/api/query`）、Google Scholar、学术会议论文集 |
+| Product updates / tech decisions | Official blog, GitHub Release Notes, founder tweets |
+| Funding / business data | Official company announcements, SEC / corporate filings |
+| User reputation | GitHub Issues, Reddit discussions, Twitter/X, 知乎 posts |
+| Industry analysis | Authoritative original reporting (not reposts) |
+| Academic / technical principles | arXiv papers (`export.arxiv.org/api/query`), Google Scholar, conference proceedings |
 
-### 信息充分性自检
+### Information Sufficiency Self-Check
 
-搜索完成后检查：
-- 纵向：能讲出一个完整的故事吗？有没有明显的信息断层？
-- 横向：竞品列表完整吗？有没有遗漏主要玩家？每个竞品的信息够做对比吗？
-- 来源：关键事实有可靠来源支撑吗？有没有只靠单一来源就下判断的？
+After searching, verify:
+- Vertical: Can you tell a complete story? Are there obvious information gaps?
+- Horizontal: Is the competitor list complete? Any major players missing? Enough information on each competitor for comparison?
+- Sources: Are key facts backed by reliable sources? Any judgments resting on a single source?
 
-信息不够就再补搜。不要凑合。
-
----
-
-## 第二步：纵向分析（Diachronic / Longitudinal）
-
-沿时间轴，完整还原研究对象从诞生到现在的发展全貌。这是报告的主体部分，篇幅应该最重。
-
-### 内容要求
-
-**起源追溯**：它诞生的背景是什么？基于什么技术/理念/需求而来？创始团队或核心推动者是谁？这些人之前做过什么，为什么是他们来做这件事？当时的行业环境是什么样的？有没有某个关键事件或灵感直接促成了它的诞生？
-
-**诞生节点**：明确的首次发布/成立/提出时间，最初的形态和定位，跟现在有什么不同。
-
-**演进历程**：从诞生到现在，按时间顺序梳理所有关键节点。包括但不限于：重大版本更新、融资事件、团队变动、战略转型、技术架构变化、用户规模里程碑、重大合作或收购、公关危机或争议事件。
-
-**决策逻辑**：在每个关键节点上，尽可能还原决策背后的原因。为什么选了A而不是B？当时面对的约束条件是什么？哪些早期决策"锁定"了后来的发展方向、难以逆转？什么机制让它越走越深（网络效应、生态绑定、技术栈选择等）？
-
-**阶段划分**：把整个历程自然分为几个阶段（萌芽期、快速增长期、转型期等），每个阶段有核心特征和核心矛盾。
-
-### 篇幅
-
-6000-15000字。历史越长、节点越多的对象靠近上限，新生事物靠近下限。核心原则是把故事讲完整、讲透，每个关键节点都值得展开，不要为了压缩而跳过重要细节。宁可写长写细，也不要蜻蜓点水。
+If information is insufficient, search more. Don't settle.
 
 ---
 
-## 第三步：横向分析（Synchronic / Cross-sectional）
+## Step 2: Vertical Analysis (Diachronic / Longitudinal)
 
-以当前时间点为切面，将研究对象与同赛道的竞品/同类进行全面对比。
+Trace the full arc of the research subject's development from birth to the present along the timeline. This is the main body of the report and should be the longest section.
 
-### 首先判断竞品情况
+### Content Requirements
 
-分三种场景处理：
+**Origin tracing**: What was the context of its birth? What technology/philosophy/need did it spring from? Who were the founding team or core drivers? What had they done before, and why were they the ones to do this? What was the industry environment like at the time? Was there a key event or inspiration that directly sparked its creation?
 
-**场景A：无直接竞品。** 如果研究对象是全新品类或独占性极强的领域，跳过逐一对比，改为分析：它为什么没有竞品？是品类太新、壁垒太高、还是市场太小？未来最可能从哪个方向冒出竞争者？有没有间接替代方案或上一代解决方式可以参照？
+**Birth node**: The definitive first release/founding/proposal date, the initial form and positioning, and how it differs from today.
 
-**场景B：少量竞品（1-2个）。** 逐一深入对比，每个竞品展开详细分析。
+**Evolution arc**: From birth to present, lay out all key milestones in chronological order. Including but not limited to: major version updates, funding events, team changes, strategic pivots, technical architecture shifts, user-scale milestones, major partnerships or acquisitions, PR crises or controversies.
 
-**场景C：竞品充分（3个及以上）。** 选取最具代表性的3-5个进行对比，其余简要提及。
+**Decision logic**: At each key node, reconstruct the reasoning behind the decision as much as possible. Why choose A over B? What constraints existed at the time? Which early decisions "locked in" later directions and became hard to reverse? What mechanisms drove ever-deeper commitment (network effects, ecosystem lock-in, tech-stack choices, etc.)?
 
-### 对比维度
+**Phase breakdown**: Divide the full arc into natural phases (nascent, rapid growth, transformation, etc.), each with a defining characteristic and a central tension.
 
-根据研究对象的类型灵活调整，但至少覆盖以下方面：
+### Length
 
-**核心差异对比**：技术路线/核心方法论/底层逻辑、产品形态/商业模式/组织结构、目标用户/受众/适用场景、核心优势与明显短板、定价策略/资源投入/规模体量。
-
-**用户视角**：每个竞品的真实用户口碑如何？社区评价、使用体验中被提及最多的优点和槽点分别是什么？用户实际的使用方式和官方定位有没有偏差？对比不要写成参数对照表的文字版，要讲清楚每个竞品「活成了什么样」，用户选它的真实理由是什么。
-
-**生态位分析**：在整个赛道的版图中，研究对象占据什么位置？填补了什么空白，还是在跟谁正面竞争？当前格局是百花齐放、两强争霸、还是一家独大？
-
-**趋势判断**：基于横向对比，研究对象在竞争格局中的走向是什么？机会和风险各是什么？
-
-### 篇幅
-
-3000-10000字。场景A控制在3000字左右，场景C每个主要竞品至少展开1500字以上的独立分析，不要一笔带过。
+6,000–15,000 words. Subjects with longer histories and more milestones should approach the upper bound; newer subjects the lower bound. The core principle is to tell the story fully and deeply — every key milestone deserves elaboration. Don't skip important details for the sake of brevity. Better to write long and rich than to skim the surface.
 
 ---
 
-## 第四步：横纵交汇洞察
+## Step 3: Horizontal Analysis (Synchronic / Cross-Sectional)
 
-这是整篇报告的精华段。把纵向发展脉络和横向竞争格局结合起来，给出综合性的、新的判断。不要写成前面内容的缩写版。
+Take the current point in time as the cross-section and compare the research subject comprehensively against competitors/peers in the same space.
 
-需要回答的核心问题：
+### First, Assess the Competitive Landscape
 
-1. **历史如何塑造了当下的竞争位置**：纵向历程中的哪些决策和事件，决定了它今天在横向对比中的位置？
-2. **竞品的纵向对比**：如果把主要竞品也放到时间线上看，它们的起源和演变路径有什么不同？这些不同如何导致了今天各自的特点？
-3. **优势的历史根源**：今天的每个核心优势，能追溯到历史上的哪个节点或决策？
-4. **劣势的历史根源**：今天的每个核心劣势，能追溯到哪个历史决策？当初的「好决策」有没有变成今天的包袱？
-5. **未来推演**：基于纵向趋势和横向竞争格局，给出三个剧本——最可能的、最危险的、最乐观的，每个剧本要有逻辑支撑。
+Handle three scenarios:
 
-### 篇幅
+**Scenario A: No direct competitors.** If the subject is a brand-new category or occupies an extremely strong monopoly position, skip individual comparisons. Instead analyze: Why are there no competitors? Is the category too new, the moat too high, or the market too small? Where is the most likely direction for competitors to emerge? Are there indirect substitutes or previous-generation solutions to benchmark against?
 
-1500-3000字。
+**Scenario B: Few competitors (1–2).** Do an in-depth comparison for each, with detailed analysis per competitor.
 
----
+**Scenario C: Ample competitors (3+).** Select the 3–5 most representative for detailed comparison; mention the rest briefly.
 
-## 写作风格
+### Comparison Dimensions
 
-这不是一份冷冰冰的咨询报告，而是一篇让人能从头读到尾的深度研究。写作风格需要在「研究报告的严谨」和「卡兹克的可读性」之间找到平衡点。
+Adjust flexibly based on the type of research subject, but cover at least the following:
 
-### 从卡兹克文风中借鉴的核心元素
+**Core differentiators**: Technical approach / core methodology / underlying logic, product form / business model / organizational structure, target users / audience / applicable scenarios, core strengths and obvious weaknesses, pricing strategy / resource investment / scale.
 
-以下风格元素直接应用到报告写作中（详细定义请参考 khazix-writer skill）：
+**User perspective**: What is the real-world user reputation for each competitor? What are the most frequently praised strengths and criticized pain points in community reviews and usage experiences? Is there a gap between how users actually use the product and the official positioning? Don't write the comparison as a prose version of a spec-sheet — explain what each competitor "lives like" in practice and why users genuinely choose it.
 
-**节奏感**：句子时长时短，段落之间跳跃自然。不要每段都一样长，一句话自成一段制造重量感的技巧可以用。好的节奏像波动，每次围绕主线偏出去一点，再用一句「扣主线句」拉回来。
+**Niche analysis**: In the overall map of the space, what position does the research subject occupy? What gap does it fill, or who is it competing head-to-head with? Is the current landscape a free-for-all, a duopoly, or a monopoly?
 
-**叙事驱动，不是罗列驱动**：纵向部分要有故事弧线，有起承转合。比如一个产品为什么在某个时间点突然爆发，背后的铺垫是什么，转折是什么。不要写成"2023年1月发布了A，2023年3月发布了B"这种流水账。
+**Trend assessment**: Based on horizontal comparison, what is the trajectory of the research subject within the competitive landscape? What are the opportunities and risks?
 
-**知识是「聊着聊着顺手掏出来」的**：在讲述过程中自然地带出背景知识，不要「下面我来给大家科普一下」。
+### Length
 
-**敢下判断**：鼓励给出观点和洞察，但每个观点必须有事实支撑。先摆事实，再给判断。是推测的明确标注。表达判断时用「我觉得」「我的判断是」这种承认主观性的姿态，而不是居高临下的定论。
-
-**层层剥开的修辞**：不直接讲结论，用"现象→表面解释→更深的追问→核心洞察"的方式展开。让读者参与到思考过程中。
-
-**文化升维**：在交汇洞察部分，连接到更大的文化/哲学/历史参照物。不是硬凑的升华，是「聊着聊着自然想到了」的感觉。
-
-**回环呼应**：开头或纵向部分埋的细节和钩子，在交汇洞察或结尾callback回来。前后因果的闭合感，是让报告从「信息流」变成「作品」的关键。
-
-### 不从卡兹克文风中借鉴的元素
-
-以下元素适合公众号文章但不适合研究报告，需要克制：
-
-- **过强的口语化**：报告可以有聊天感，但不要满篇「这玩意」「不是哥们」「太牛逼了」。偶尔点缀可以，但密度要比公众号文章低很多。
-- **去小标题化**：公众号文章追求一口气顺下来不加小标题。研究报告不一样，1-3万字的内容如果没有清晰的结构和导航，读者会迷路。报告需要清晰的章节结构。
-- **标点禁令可以放松**：公众号文章禁用冒号和破折号。研究报告中可以正常使用，因为报告需要的是信息传达效率。但「」的使用习惯可以保留。
-- **固定尾部**：不要加公众号的三连/星标尾部。
-
-### 绝对禁区（依然适用）
-
-以下AI味标记无论什么文体都要避免：
-- 套话："首先...其次...最后"、"综上所述"、"值得注意的是"、"不难发现"
-- 空洞形容词："赋能"、"抓手"、"打造闭环"
-- 教科书开头："在当今AI快速发展的时代"、"随着技术的不断进步"
-- 高频踩雷词："说白了"、"意味着什么？"、"这意味着"、"本质上"、"换句话说"、"不可否认"
-- 空泛工具名：不说"AI工具"、"某个模型"，要说具体名字
-- 编造场景：如果某个信息搜不到，诚实标注「该信息暂缺」，绝不编造
-
-### 用人话写
-
-避免咨询公司式的套话和空洞概括。用具体的细节和例子代替概括性陈述。比如不要写「该公司在这一阶段实现了快速增长」，而要写「从2024年中期的1000万美元ARR到2025年底的10亿美元，增长曲线几乎是垂直的」。
+3,000–10,000 words. Scenario A should stay around 3,000 words; Scenario C should devote at least 1,500 words of independent analysis per major competitor — don't gloss over them.
 
 ---
 
-## 第五步：生成PDF报告
+## Step 4: Cross-Axis Insights
 
-报告写完后，使用本Skill自带的 `scripts/md_to_pdf.py` 脚本将Markdown转为排版精美的PDF。
+This is the crown jewel of the report. Weave together the vertical development arc and horizontal competitive landscape to produce integrated, original judgments. Do not write a condensed summary of the preceding sections.
 
-### 转换流程
+Core questions to answer:
 
-1. **先完成Markdown稿件**：将完整报告写为标准Markdown格式，保存为 `[研究对象]_横纵分析报告.md`
-2. **安装依赖**（如未安装）：`pip install weasyprint markdown --break-system-packages`
-3. **运行转换脚本**：
+1. **How history shaped the current competitive position**: Which decisions and events in the vertical arc determined where the subject sits in today's horizontal comparison?
+2. **Vertical comparison of competitors**: If you place the major competitors on a timeline too, how do their origins and evolution paths differ? How do those differences explain their current characteristics?
+3. **Historical roots of today's strengths**: Each current core strength — which historical node or decision can it be traced back to?
+4. **Historical roots of today's weaknesses**: Each current core weakness — which historical decision can it be traced back to? Did any "good decisions" of the past become today's baggage?
+5. **Future projection**: Based on vertical trends and horizontal competition, lay out three scenarios — the most likely, the most dangerous, and the most optimistic. Each must have logical support.
+
+### Length
+
+1,500–3,000 words.
+
+---
+
+## Writing Style
+
+This is not a cold consulting report — it's a deep research piece that people will actually read start to finish. The writing style needs to balance "research-report rigor" with "Khazix-level readability."
+
+### Core Style Elements Borrowed from Khazix
+
+The following style elements apply directly to report writing (for detailed definitions see the khazix-writer skill):
+
+**Rhythm**: Vary sentence length — short then long, paragraphs that breathe. Don't make every paragraph the same length; a single-sentence paragraph for weight is a valid move. Good rhythm undulates, each time drifting slightly off the main thread before a "callback sentence" pulls you back.
+
+**Narrative-driven, not list-driven**: The vertical section must have a story arc — setup, development, turning point, resolution. For example, why a product suddenly exploded at a particular moment, what the buildup was, what the pivot was. Don't write "January 2023: released A. March 2023: released B" — that's a timeline, not a story.
+
+**Knowledge drops naturally in conversation**: Weave background knowledge into the narrative organically, don't announce "now let me explain the concept of..."
+
+**Make bold judgments**: Offer opinions and insights, but every opinion must have factual support. Facts first, judgment second. If it's speculation, label it explicitly. Frame judgments as "my read is..." or "I'd argue..." — acknowledging subjectivity rather than issuing authoritative pronouncements.
+
+**Peel the onion**: Don't state the conclusion upfront. Unfold through "phenomenon → surface explanation → deeper question → core insight." Let the reader participate in the thinking process.
+
+**Cultural elevation**: In the cross-axis insights section, connect to broader cultural/philosophical/historical reference points. Not forced thematic uplift — the kind where you're telling a story and it naturally reminds you of something bigger.
+
+**Callback loops**: Details and hooks planted early in the vertical section should callback in the cross-axis insights or conclusion. The sense of causal closure is what turns a report from an "information stream" into a "piece of work."
+
+### Elements Unsuitable for Research Reports
+
+The following elements work for blog-style articles but should be restrained in research reports:
+
+- **Excessive informality**: The report can have a conversational feel, but don't saturate it with slang and throwaway expressions. An occasional colloquial touch is fine, but at a much lower density than a blog post.
+- **Removing all subheadings**: Blog articles aim for a single unbroken flow without subheadings. Research reports are different — 10,000–30,000 words without clear structure and navigation will lose the reader. Reports need clear chapter structure.
+- **Punctuation constraints can be relaxed**: Blog-style articles restrict colons and em-dashes. Research reports can use them normally, because informational efficiency matters here.
+- **Fixed footer**: Don't add blog-style subscription/share CTAs at the end.
+
+### Absolute No-Go Zone
+
+The following AI-flavored markers must be avoided regardless of genre:
+
+- Crutch transitions: "First... Second... Finally...", "In conclusion", "To summarize", "All things considered"
+- Hollow hedging: "It's worth noting that", "Notably", "It should be mentioned that", "Needless to say"
+- Empty buzzwords: "empower", "leverage", "unlock", "key lever/driver", "end-to-end ecosystem", "holistic approach", "synergy"
+- Template openings: "In today's rapidly evolving AI landscape", "As technology continues to advance", "In an era of unprecedented change"
+- Filler phrases: "Simply put", "Essentially", "In other words", "It goes without saying"
+- Hype words (when used as filler): "game-changer", "paradigm shift", "robust ecosystem", "deep dive", "next-generation", "cutting-edge"
+- Vague tool names: Don't write "an AI tool" or "a certain model" — use the specific name
+- Fabricated scenarios: If you can't find a piece of information, honestly label it "information not available" — never fabricate
+
+### Write Like a Human
+
+Avoid consulting-speak and empty generalizations. Replace sweeping statements with specific details and examples. Don't write "the company achieved rapid growth during this phase" — write "from $10M ARR in mid-2024 to $1B by late 2025, the growth curve was almost vertical."
+
+---
+
+## Step 5: Generate the PDF Report
+
+After the report is written, use this skill's built-in `scripts/md_to_pdf.py` to convert the Markdown to a beautifully typeset PDF.
+
+### Conversion Workflow
+
+1. **Complete the Markdown draft first**: Write the full report in standard Markdown format, saved as `[subject]_hv-analysis-report.md`
+2. **Install dependencies** (if not already): `pip install weasyprint markdown --break-system-packages`
+3. **Run the conversion script**:
    ```bash
-   python [skill目录]/scripts/md_to_pdf.py input.md output.pdf --title "研究对象名称" --author "数字生命卡兹克"
+   python [skill-directory]/scripts/md_to_pdf.py input.md output.pdf --title "Subject Name" --author "Khazix"
    ```
-4. 脚本会自动生成中间HTML文件（便于调试）和最终PDF
+4. The script automatically generates an intermediate HTML file (for debugging) and the final PDF
 
-### 脚本内置的排版规范
+### Built-in Typesetting
 
-`md_to_pdf.py` 已内置完整的CSS排版方案，无需手动调整：
+`md_to_pdf.py` includes a complete CSS typesetting scheme — no manual adjustments needed:
 
-- **页面**：A4，页边距上25mm/左右20mm/下20mm
-- **封面页**：自动生成，包含标题（28pt深蓝色）、副标题「横纵分析法深度研究报告」、作者信息、装饰分隔线
-- **配色**：H1标题=#1a5276深蓝、H2=#1e8449绿色、H3=#2e86c1浅蓝、H4=#5b2c6f紫色，正文=#2c3e50深灰
-- **字体**：CSS fallback链 `"Droid Sans Fallback", Helvetica, Arial, sans-serif`，自动处理中英文混排
-- **正文**：10.5pt，行距1.75，两端对齐，孤行/寡行控制
-- **引用块**：左侧3pt深蓝竖线 + 浅灰背景
-- **表格**：全宽、深蓝表头白字、斑马纹行
-- **页眉**：「报告标题 | 横纵分析法深度研究报告」（首页不显示）
-- **页脚**：「第 X 页」（首页不显示）
-- Markdown的第一个H1会被自动提取为封面标题，正文中不会重复出现
+- **Page**: A4, margins top 25mm / left-right 20mm / bottom 20mm
+- **Cover page**: Auto-generated with title (28pt dark blue), subtitle "Horizontal-Vertical Analysis Deep Research Report", author info, decorative divider
+- **Colors**: H1 = #1a5276 dark blue, H2 = #1e8449 green, H3 = #2e86c1 light blue, H4 = #5b2c6f purple, body = #2c3e50 dark gray
+- **Fonts**: CSS fallback chain `"Droid Sans Fallback", Helvetica, Arial, sans-serif`, handles mixed CJK/Latin text automatically
+- **Body text**: 10.5pt, line-height 1.75, justified, orphan/widow control
+- **Blockquotes**: Left 3pt dark blue border + light gray background
+- **Tables**: Full-width, dark blue header with white text, zebra-striped rows
+- **Header**: `{title} | Horizontal-Vertical Deep Research` (hidden on first page)
+- **Footer**: `Page X` (hidden on first page)
+- The first H1 in the Markdown is automatically extracted for the cover title and will not repeat in the body
 
-### Markdown写作注意事项
+### Markdown Writing Tips
 
-为了让脚本正确解析并生成最佳PDF效果：
+For best PDF output from the script:
 
-- 第一行用 `# 标题` 作为报告标题（会自动用于封面）
-- 紧接标题后可用 `> 研究时间：... | 所属领域：... | 研究对象类型：...` 格式写元信息行，会被提取到封面
-- 用 `##` 作为主要章节标题（纵向分析、横向分析、横纵交汇等）
-- 用 `###` 和 `####` 作为子章节
-- 表格使用标准Markdown表格语法
-- 引用使用 `>` 语法
-- 加粗使用 `**文本**`
+- Use `# Title` on the first line as the report title (auto-used for the cover)
+- Immediately after the title, you can write a metadata line in blockquote format: `> Research date: ... | Domain: ... | Subject type: ...` — this will be extracted to the cover
+- Use `##` for major chapter headings (Vertical Analysis, Horizontal Analysis, Cross-Axis Insights, etc.)
+- Use `###` and `####` for subsections
+- Tables use standard Markdown table syntax
+- Quotes use `>` syntax
+- Bold uses `**text**`
 
-### 末尾内容
+### End Matter
 
-在Markdown稿件末尾加上：
-- **信息来源**：所有引用的来源清单，标注URL和访问时间
-- **方法论说明**：简要说明横纵分析法的来源（1-2句话即可）
+At the end of the Markdown draft, include:
+- **Sources**: A complete list of all cited sources, with URLs and access dates
+- **Methodology note**: A brief note on the origin of HV Analysis (1–2 sentences is enough)
 
-### 报告结构模板
+### Report Structure Template
 
 ```
-封面页
+Cover Page
 
-目录
+Table of Contents
 
-一、一句话定义
-[用一句话说清楚这个东西是什么]
+I. One-Line Definition
+[One sentence that says exactly what this thing is]
 
-二、纵向分析：从诞生到当下
-[完整的纵向叙事，6000-15000字]
+II. Vertical Analysis: From Origin to Present
+[Full vertical narrative, 6,000–15,000 words]
 
-三、横向分析：竞争图谱
-[横向对比分析，3000-10000字]
+III. Horizontal Analysis: Competitive Landscape
+[Horizontal comparison analysis, 3,000–10,000 words]
 
-四、横纵交汇洞察
-[交叉分析和未来推演，1500-3000字]
+IV. Cross-Axis Insights
+[Cross-analysis and future projection, 1,500–3,000 words]
 
-五、信息来源
-[所有引用的来源列表]
+V. Sources
+[Complete list of cited sources]
 ```
 
-### 文件命名和交付
+### File Naming and Delivery
 
-PDF文件命名为 `[研究对象名称]_横纵分析报告.pdf`，保存到用户的工作目录中。
+Name the PDF `[subject-name]_hv-analysis-report.pdf` and save it to the user's working directory.
 
 ---
 
-## 不同研究对象类型的适配
+## Adapting to Different Research Subject Types
 
-核心原则不变（纵向追时间深度，横向追同期广度），但侧重点不同：
+The core principle stays the same (vertical for temporal depth, horizontal for contemporary breadth), but emphasis shifts:
 
-**研究产品时**：纵轴重点关注版本迭代、技术路线演变、用户增长曲线、关键产品决策；横轴重点关注功能对比、性能对比、用户体验、定价。
+**Researching a product**: Vertical axis focuses on version iterations, technical roadmap evolution, user growth curve, key product decisions; horizontal axis focuses on feature comparison, performance comparison, user experience, pricing.
 
-**研究公司时**：纵轴重点关注创始团队、融资历程、战略转向、组织变革、关键人事变动；横轴重点关注商业模式差异、市场份额、营收对比、组织架构差异。
+**Researching a company**: Vertical axis focuses on founding team, funding history, strategic pivots, organizational changes, key personnel moves; horizontal axis focuses on business model differences, market share, revenue comparison, organizational structure differences.
 
-**研究概念时**（技术范式、商业模式、文化现象）：纵轴重点关注概念的起源（谁提出的、基于什么理论/需求）、如何流行起来、经历了哪些争论和演变；横轴重点关注与相近概念的区别、各自适用场景、不同阵营的论证。
+**Researching a concept** (technical paradigm, business model, cultural phenomenon): Vertical axis focuses on the concept's origin (who proposed it, based on what theory/need), how it gained traction, what debates and evolutions it went through; horizontal axis focuses on distinctions from adjacent concepts, applicable scenarios for each, arguments from different camps.
 
-**研究人物时**：纵轴重点关注个人经历、职业轨迹、关键决策、成长曲线、公开言论变化；横轴重点关注与同领域其他人物的对比（做事方式、风格、成就、影响力、路线选择差异）。
+**Researching a person**: Vertical axis focuses on personal history, career trajectory, key decisions, growth arc, evolution of public statements; horizontal axis focuses on comparison with peers in the same field (working style, approach, achievements, influence, divergent choices).
 
 ---
 
-## 篇幅总览
+## Length Overview
 
-| 部分 | 字数范围 | 说明 |
+| Section | Word Count Range | Notes |
 |-----|---------|------|
-| 纵向分析 | 6,000 - 15,000字 | 报告主体，不要蜻蜓点水 |
-| 横向分析 | 3,000 - 10,000字 | 视竞品数量调整 |
-| 横纵交汇 | 1,500 - 3,000字 | 精华段，给出新判断 |
-| **全文总计** | **10,000 - 30,000字** | 不要怕长，深度和完整度是价值所在 |
+| Vertical Analysis | 6,000–15,000 words | Report backbone — don't skim the surface |
+| Horizontal Analysis | 3,000–10,000 words | Adjust based on competitor count |
+| Cross-Axis Insights | 1,500–3,000 words | Crown jewel — deliver original judgments |
+| **Full Report** | **10,000–30,000 words** | Don't fear length — depth and completeness are the value |
 
 ---
 
-## 质检清单
+## Quality Checklist
 
-交付前自检：
+Self-check before delivery:
 
-- [ ] 纵轴是叙事故事体？读起来有因果逻辑和时代脉络？不是年表流水账？
-- [ ] 创始人/发起者的背景和动机有足够深度？
-- [ ] 每个关键节点都展开写了，没有为了压缩而跳过重要细节？
-- [ ] 决策逻辑有还原？不只是「发生了什么」，还有「为什么这么选」？
-- [ ] 横轴的竞品场景判断正确（A/B/C）？竞品分析够深？
-- [ ] 用户口碑部分引用了真实用户的声音？不只是官方宣传？
-- [ ] 横纵交汇产出了新的判断，不是前面内容的缩写版？
-- [ ] 未来推演的三个剧本都有逻辑支撑？
-- [ ] 写作风格有节奏感、有可读性？不是冷冰冰的咨询报告？
-- [ ] 没有触犯绝对禁区里的任何一条？
-- [ ] 所有关键事实标注了信息来源？
-- [ ] 搜不到的信息诚实标注了「暂缺」，没有编造？
-- [ ] PDF排版美观、结构清晰、可读性好？
-- [ ] 总字数在 10,000-30,000 字的范围内？
+- [ ] Is the vertical axis written as narrative prose? Does it read with causal logic and historical context? Not a chronological bullet list?
+- [ ] Is the founder/initiator background and motivation explored with sufficient depth?
+- [ ] Is every key milestone fully developed, with no important details skipped for brevity?
+- [ ] Is decision logic reconstructed? Not just "what happened" but "why they chose this"?
+- [ ] Is the horizontal axis scenario correctly identified (A/B/C)? Is the competitor analysis deep enough?
+- [ ] Does the user reputation section cite real user voices? Not just official marketing?
+- [ ] Do the cross-axis insights produce new judgments, not a condensed version of prior sections?
+- [ ] Do all three future scenarios have logical support?
+- [ ] Does the writing have rhythm and readability? Not a cold consulting report?
+- [ ] Zero violations from the Absolute No-Go Zone?
+- [ ] Are all key facts attributed to information sources?
+- [ ] Is missing information honestly labeled "not available" rather than fabricated?
+- [ ] Is the PDF well-typeset, clearly structured, and readable?
+- [ ] Is total word count within the 10,000–30,000 range?

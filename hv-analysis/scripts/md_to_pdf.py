@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-横纵分析法报告 Markdown → PDF 转换脚本 (WeasyPrint版)
-用法: python md_to_pdf.py input.md output.pdf [--title "报告标题"] [--author "作者"]
+HV-Analysis Report: Markdown → PDF conversion script (WeasyPrint)
+Usage: python md_to_pdf.py input.md output.pdf [--title "Report Title"] [--author "Author"]
 
-依赖: pip install weasyprint markdown --break-system-packages
+Dependencies: pip install weasyprint markdown --break-system-packages
 """
 
 import sys
@@ -28,7 +28,7 @@ CSS_TEMPLATE = """
     }
 
     @bottom-center {
-        content: "第 " counter(page) " 页";
+        content: "Page " counter(page);
         font-family: "Droid Sans Fallback", Helvetica, Arial, sans-serif;
         font-size: 8pt;
         color: #95a5a6;
@@ -201,8 +201,9 @@ a {
 """
 
 
-def md_to_html(md_text, title="横纵分析报告", subtitle="横纵分析法深度研究报告",
-               meta_line="", author="数字生命卡兹克"):
+def md_to_html(md_text, title="HV-Analysis Report",
+               subtitle="Horizontal-Vertical Analysis Deep Research Report",
+               meta_line="", author="Khazix"):
     """将 Markdown 转为带封面的 HTML"""
 
     # 用 markdown 库转换正文
@@ -216,12 +217,13 @@ def md_to_html(md_text, title="横纵分析报告", subtitle="横纵分析法深
     first_h1_match = re.search(r'<h1>(.*?)</h1>', html_body)
     if first_h1_match:
         extracted_title = first_h1_match.group(1)
-        if not title or title == "横纵分析报告":
+        if not title or title == "HV-Analysis Report":
             title = extracted_title
         html_body = html_body.replace(first_h1_match.group(0), '', 1)
 
     # 替换 CSS 中的页眉占位符
-    css = CSS_TEMPLATE.replace("HEADER_TEXT", f"{title}  |  横纵分析法深度研究报告")
+    css = CSS_TEMPLATE.replace("HEADER_TEXT",
+                               f"{title}  |  Horizontal-Vertical Deep Research")
 
     # 构建封面
     cover_html = f"""
@@ -230,12 +232,12 @@ def md_to_html(md_text, title="横纵分析报告", subtitle="横纵分析法深
         <div class="subtitle">{subtitle}</div>
         {"<div class='meta'>" + meta_line + "</div>" if meta_line else ""}
         <hr class="divider">
-        <div class="meta">作者: {author}</div>
+        <div class="meta">Author: {author}</div>
     </div>
     """
 
     full_html = f"""<!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <style>{css}</style>
@@ -250,37 +252,42 @@ def md_to_html(md_text, title="横纵分析报告", subtitle="横纵分析法深
 
 
 def main():
-    parser = argparse.ArgumentParser(description="横纵分析法报告 Markdown → PDF")
-    parser.add_argument("input", help="输入的 Markdown 文件路径")
-    parser.add_argument("output", help="输出的 PDF 文件路径")
-    parser.add_argument("--title", default=None, help="报告标题")
-    parser.add_argument("--author", default="数字生命卡兹克", help="作者名")
+    parser = argparse.ArgumentParser(
+        description="HV-Analysis Report: Markdown to PDF converter")
+    parser.add_argument("input", help="Path to the input Markdown file")
+    parser.add_argument("output", help="Path for the output PDF file")
+    parser.add_argument("--title", default=None, help="Report title")
+    parser.add_argument("--author", default="Khazix", help="Author name")
     args = parser.parse_args()
 
     with open(args.input, "r", encoding="utf-8") as f:
         md_text = f.read()
 
-    # 提取元信息
+    # 提取元信息（中英文关键词兼容）
     meta_line = ""
     for line in md_text.split("\n"):
         stripped = line.strip().lstrip(">").strip()
-        if "研究时间" in stripped or "所属领域" in stripped or "研究对象类型" in stripped:
+        if any(kw in stripped for kw in [
+            "研究时间", "所属领域", "研究对象类型",
+            "Research date", "Domain", "Subject type",
+        ]):
             meta_line = stripped
             break
 
-    html = md_to_html(md_text, title=args.title or "横纵分析报告", meta_line=meta_line, author=args.author)
+    html = md_to_html(md_text, title=args.title or "HV-Analysis Report",
+                      meta_line=meta_line, author=args.author)
 
     # 保存中间 HTML（便于调试）
     html_path = args.output.replace('.pdf', '.html')
     with open(html_path, 'w', encoding='utf-8') as f:
         f.write(html)
-    print(f"[OK] HTML 已生成: {html_path}")
+    print(f"[OK] HTML generated: {html_path}")
 
     # 转 PDF
     from weasyprint import HTML
     HTML(string=html).write_pdf(args.output)
     size_kb = os.path.getsize(args.output) / 1024
-    print(f"[OK] PDF 已生成: {args.output} ({size_kb:.1f} KB)")
+    print(f"[OK] PDF generated: {args.output} ({size_kb:.1f} KB)")
 
 
 if __name__ == "__main__":

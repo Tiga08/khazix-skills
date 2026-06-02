@@ -1,65 +1,65 @@
-# 变更影响矩阵
+# Change Impact Matrix
 
-遇到不确定"这次改动要同步哪些文件"时查这张表。**两个方向都要查**：补漏（加到哪些文件）+ 防膨胀（应该从哪些文件删）。
+Use this table when you're unsure which files need syncing after a change. **Check both directions**: gap-filling (which files to add to) + anti-bloat (which files to remove from).
 
-## 反向：哪些信息该从 CLAUDE.md / 记忆里删除
+## Reverse: What to Remove from CLAUDE.md / Memory
 
-CLAUDE.md / AGENTS.md 不是变更日志。下面这些反模式发现了就删 / 迁：
+CLAUDE.md / AGENTS.md is not a changelog. Remove or migrate whenever you spot these anti-patterns:
 
-| 反模式 | 处理 |
+| Anti-Pattern | Action |
 |---|---|
-| "X 时刻起 Y 功能上线，详见 docs/Z.md" 形式的 blockquote | 删除——指针角色已经被「深入文档」指针表占掉，叙事归 git log / `/changelog` / `docs/CHANGES.md` |
-| 在 CLAUDE.md 里抄 docs/ 已有的详细机制 / 数据流 / 评分公式 | 删除——AI 改到这块自然会读 docs，CLAUDE.md 只留"边界规则" |
-| 已经稳定 ≥ 7 天的"新功能上线"叙事 | 该融入项目概览的融入；纯历史的删 |
-| 一次性事故的复盘细节（"X 时 Y 服务挂了 30min 因为 Z"） | 留 1 行红线规则（"不要再裸跑 systemctl stop X"），事故详情归 docs/PLAYBOOK.md 或删 |
-| 已被新版本取代的"中间态"叙事（"5/6 改了 X，5/8 又改成 Y"） | 只留最终态规则；中间历史删 |
-| 单条 memory > 100 行 + 全是事故复盘 | 提炼成一条 ≤ 30 行的"规则 + Why + How to apply"；多余的删 |
-| 记忆条目里"已被 X 取代" / "已废弃" / "保留作历史" 字样 | 99% 真的可以删，docs 已经是权威 |
+| Blockquotes of the form "as of X, feature Y went live, see docs/Z.md" | Delete — the pointer role is already served by the deep-docs pointer table; narrative belongs in git log / `/changelog` / `docs/CHANGES.md` |
+| Copying detailed mechanisms / data flows / scoring formulas from docs/ into CLAUDE.md | Delete — AI will read docs when it touches that code; CLAUDE.md should only keep "boundary rules" |
+| "New feature launched" narrative that has been stable ≥ 7 days | Absorb into project overview where appropriate; delete the rest |
+| One-time incident postmortem details ("at X, service Y was down 30min because Z") | Keep a 1-line red-line rule ("never bare-run systemctl stop X"); move incident details to docs/PLAYBOOK.md or delete |
+| "Intermediate state" narrative superseded by newer version ("5/6 changed X, 5/8 changed it to Y") | Keep only the final-state rule; delete intermediate history |
+| Single memory entry > 100 lines + all incident postmortem | Distill into one ≤ 30-line "rule + Why + How to apply" entry; delete the rest |
+| Memory entries containing "superseded by X" / "deprecated" / "kept for history" | 99% of the time these really can be deleted — docs is the authority |
 
-判断标准：**这条信息在下次 AI 写代码时如果没看到，会犯错吗？** 不会就删 / 迁。
+Litmus test: **If the AI doesn't see this line next time it writes code, will it make a mistake?** No → delete or migrate.
 
-## 代码层变更 → 文档层变更
+## Code-Layer Changes → Doc-Layer Changes
 
-| 本次对话发生的事 | 要改的文件(按受众) |
+| What Happened in This Conversation | Files to Update (by audience) |
 |---|---|
-| 新增 API / 路由 | 项目根 markdown 路由清单 · `docs/integration-guide.md` API 速查表 · `docs/architecture.md` Routes 小节 |
-| 新增 / 改名 环境变量 | 项目根 markdown 环境变量表 · `docs/operator-runbook.md` 环境变量章节 · `docs/integration-guide.md`(如果下游要配) |
-| 新增数据库表 / 列 | 项目根 markdown 数据库表 · `docs/architecture.md` Data Model |
-| 新增 / 改动 用户流程 | 项目根 markdown 用户流程 · README 相关命令行示例 · `docs/handoff.md` What Exists Today |
-| 新增大特性(能跨多文件) | 以上全部 + `docs/architecture.md` 新增章节 + `docs/handoff.md` 已完成清单 |
-| 新增术语 / 改命名 | `docs/integration-guide.md` 术语表(如果有)+ 全局搜索旧术语替换 |
-| 部署参数 / 基础设施变化 | `docs/operator-runbook.md` · 项目根 markdown 部署章节 |
-| 下游项目接入方式变化 | 下游项目的 `docs/<integration>.md` · 上游项目的 `integration-guide.md` |
+| New API / route | Project root markdown route list · `docs/integration-guide.md` API cheat sheet · `docs/architecture.md` Routes section |
+| New / renamed env var | Project root markdown env var table · `docs/operator-runbook.md` env var section · `docs/integration-guide.md` (if downstream needs to configure it) |
+| New database table / column | Project root markdown DB table · `docs/architecture.md` Data Model |
+| New / changed user flow | Project root markdown user flow · README command-line examples · `docs/handoff.md` What Exists Today |
+| Major new feature (cross-file) | All of the above + `docs/architecture.md` new section + `docs/handoff.md` completed list |
+| New term / renamed concept | `docs/integration-guide.md` glossary (if exists) + global search-and-replace old term |
+| Deployment param / infra change | `docs/operator-runbook.md` · project root markdown deploy section |
+| Downstream integration method changed | Downstream project's `docs/<integration>.md` · upstream project's `integration-guide.md` |
 
-## 记忆层变更
+## Memory-Layer Changes
 
-| 情况 | 处理方式 |
+| Situation | Action |
 |---|---|
-| 过期事实 | 改记忆文件,同时更新索引(如 MEMORY.md)的 description |
-| 相对时间("今天"、"最近") | 全部转成绝对日期(`2026-04-29` 而非"今天") |
-| 重复记录(多条说同一件事) | 合并为一条,改索引 |
-| 已完成的待办 | 删除——知识库不是历史档案 |
-| 推翻的决策 | 删除旧条目,留新决策 |
-| 跨会话只用一次的临时上下文 | 删除 |
+| Stale fact | Edit the memory file; also update the index (e.g. MEMORY.md) description |
+| Relative time ("today," "recently") | Convert all to absolute dates (`2026-04-29`, not "today") |
+| Duplicate entries (multiple entries saying the same thing) | Merge into one; update index |
+| Completed TODO | Delete — the knowledge base is not a historical archive |
+| Overturned decision | Delete old entry; keep the new decision |
+| One-shot temporary context from a previous session | Delete |
 
-## 跨项目影响检查
+## Cross-Project Impact Check
 
-最容易漏改的场景:
+Most frequently missed scenarios:
 
-- **上游 API 变了 → 下游 SDK 文档**:协议变化必须两边对齐
-- **共享子域 / 路由 / 环境变量改了 → 所有 consumer 项目的 setup 文档**
-- **认证中台变更 → 所有接入应用的 integration guide**
-- **公共组件 / 基础设施 升级 → 各项目的 operator-runbook 提及版本号的地方**
+- **Upstream API changed → downstream SDK docs**: Protocol changes must be aligned on both sides
+- **Shared subdomain / route / env var changed → setup docs for all consumer projects**
+- **Auth middleware changed → integration guide for all connected apps**
+- **Shared component / infrastructure upgraded → operator-runbooks wherever version numbers are mentioned**
 
-判断方法:这次改的东西有没有 SDK、子域、共享配置、跨进程协议?有就要在所有依赖项目里搜一遍提到这件事的文档。
+How to check: Does this change involve an SDK, subdomain, shared config, or cross-process protocol? If yes, search all dependent projects for docs that mention it.
 
-## 文档结构通用约定
+## Documentation Structure Conventions
 
-新增一个能力(API、flow、特性)的标准动作是**四处都补**:
+The standard action for documenting a new capability (API, flow, feature) is to **update four places**:
 
-1. **integration-guide / 外部视角文档**:怎么用(curl / SDK 示例 / 错误码)
-2. **architecture**:怎么工作(数据流、状态机、设计取舍)
-3. **runbook**:怎么运维(冒烟命令、故障排查、环境变量)
-4. **handoff / CHANGELOG**:已完成
+1. **integration-guide / external-perspective doc**: How to use it (curl / SDK examples / error codes)
+2. **architecture**: How it works (data flow, state machine, design tradeoffs)
+3. **runbook**: How to operate it (smoke-test commands, troubleshooting, env vars)
+4. **handoff / CHANGELOG**: What's completed
 
-API 速查表、环境变量表、术语表是高频查询的结构化信息,**必须保持"所见即最新"**。
+API cheat sheets, env var tables, and glossaries are high-frequency lookup structures — they **must stay current**.
